@@ -57,43 +57,46 @@
 			<div class="row">
 				<div th:replace="~{commons/bar::#leftside (activeUri='emps')}"></div>
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2><a class="btn btn-sm btn-success" href="emp" th:href="@{/emp}">员工添加</a></h2>
-					<div class="table-responsive">
-						<table class="table table-striped table-sm">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>lastName</th>
-									<th>email</th>
-									<th>gender</th>
-									<th>department</th>
-									<th>birth</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="emp :${emps}">
-									<td>[[${emp.id}]]</td>
-									<td>[[${emp.lastName}]]</td>
-									<td th:text="${emp.email}"></td>
-									<td th:text="${emp.gender}==0?'女':'男'"></td>
-									<td th:text="${emp.department.departmentName}"></td>
-									<td th:text="${#dates.format(emp.birth, 'yyyy/MM/dd HH:mm')}"></td>
-									<td>
-										<a th:href="@{/emp/}+${emp.id}" class="btn btn-sm btn-primary">编辑</a>
-										<button th:attr="del_uri=@{/emp/}+${emp.id}"  class="btn btn-sm btn-danger deleteBtn">删除</button>
+					<form th:action="@{/emp}" method="post">
+						<input name="_method" type="hidden" value="put">
+						<input type="hidden" name="id" th:value="${emp.id}">
+						<div class="form-group">
+							<label for="lastName">LastName</label>
+							<input type="type" class="form-control" th:value="${emp.lastName}" id="LastName" placeholder="LastName" name="lastName">
+						</div>
+						<div class="form-group">
+							<label for="email">Email</label>
+							<input type="email" class="form-control" id="email" th:value="${emp.email}" placeholder="name@example.com" name="email">
+						</div>
+						<div class="form-group">
+							<label>Gender</label>
+							<div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="man" name="gender" value="1" th:checked="${emp.gender==1}">
+									<label class="form-check-label" for="man">男</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="gender" id="woman" value="0" th:checked="${emp.gender==0}">
+									<label class="form-check-label" for="woman">女</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="department">Department</label>
+							<select class="form-control" id="department" name="department.id">
+								<option th:selected="${department.id==emp.department.id}" th:each="department :${departments}" th:text="${department.departmentName}" th:value="${department.id}">1</option>
+							</select>
+						</div>
 
-									</td>
-								</tr>
-							</tbody>
-
-						</table>
-
-					</div>
+						<div class="form-group">
+							<label for="birthday">Birthday</label>
+							<input class="form-control" id="birthday" name="birth" th:value="${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}"></input>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-primary">修改</button>
+						</div>
+					</form>
 				</main>
-				<form method="post" id="btnform">
-					<input name="_method" type="hidden" value="delete">
-				</form>
 			</div>
 		</div>
 
@@ -102,13 +105,8 @@
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}"></script>
 		<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/asserts/js/popper.min.js}"></script>
-		<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/asserts/js/bootstrap.min.js}"></script>
-		<script>
-			$(".deleteBtn").click(function () {
-			    var del_uri=$(this).attr("del_uri");
-				$("#btnform").attr("action",del_uri).submit();
-            });
-		</script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/sserts/js/bootstrap.min.js}"></script>
+
 		<!-- Icons -->
 		<script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
 		<script>

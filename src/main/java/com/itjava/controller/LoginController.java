@@ -16,7 +16,7 @@ public class LoginController {
     @PostMapping("/user/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password,
                         Map<String,Object> map, HttpSession session){
-        if (!StringUtils.isEmpty(username)&&"123456".equals(password)){
+        if (!StringUtils.isEmpty(username)&&"123".equals(password)){
             //防止表单重复提交，重定向到页面
             session.setAttribute("loginUser",username);
             return "redirect:/main.html";

@@ -57,41 +57,41 @@
 			<div class="row">
 				<div th:replace="~{commons/bar::#leftside (activeUri='emps')}"></div>
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form>
+					<form th:action="@{/emp}" method="post">
 						<div class="form-group">
 							<label for="lastName">LastName</label>
-							<input type="email" class="form-control" id="LastName" placeholder="LastName">
+							<input type="type" class="form-control" id="LastName" placeholder="LastName" name="lastName">
 						</div>
 						<div class="form-group">
 							<label for="email">Email</label>
-							<input type="email" class="form-control" id="email" placeholder="name@example.com">
+							<input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">
 						</div>
 						<div class="form-group">
-							<label for="gender">Gender</label>
-							<div id="gender">
+							<label>Gender</label>
+							<div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="man" value="0" checked>
+									<input class="form-check-input" type="radio" id="man" name="gender" value="1" checked>
 									<label class="form-check-label" for="man">男</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="inlineRadioOptions" id="woman" value="1">
+									<input class="form-check-input" type="radio" name="gender" id="woman" value="0">
 									<label class="form-check-label" for="woman">女</label>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="department">Department</label>
-							<select class="form-control" id="department">
+							<select class="form-control" id="department" name="department.id">
 								<option th:each="department :${departments}" th:text="${department.departmentName}" th:value="${department.id}">1</option>
 							</select>
 						</div>
 
 						<div class="form-group">
-							<label for="exampleFormControlTextarea1">Birthday</label>
-							<input class="form-control" id="birthday"></input>
+							<label for="birthday">Birthday</label>
+							<input class="form-control" id="birthday" name="birth"></input>
 						</div>
 						<div>
-							<button type="button" class="btn btn-primary">添加</button>
+							<button type="submit" class="btn btn-primary">添加</button>
 						</div>
 					</form>
 				</main>
